@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Welcome</h1>
+<p>This is simple html doc</p>
+<button id="btn">Click</button>
+<script src="jquery.js"></script>
+<!--<p id="show"></p>-->
+<div id="content" style="width: 100px; height: 100px; display: flex; border: 1px;"></div>
+<script>
+    $('#btn').click(function () {
+        // alert('Button was clicked!')
+        var http = new XMLHttpRequest();
+        http.open('GET', 'https://jsonplaceholder.typicode.com/posts');// 2nd step: tells need 2 args-> request krna data eke type and source/endpoint
+        http.send();//1st step: tells state not open
+        //onreadystatechange bcoz after clickin btn it takes a few time to bring response
+        //js doesnt have threads, its a single threaded scripting lang thereby
+        //it has event loop to get multi threading effect even though single threaded
+        http.onreadystatechange = function () {
+            if (http.readyState === 4 && http.status === 200) {
+                // $('#show').post(function (event) {
+                //     http.responseText
+                // });
+                console.log(http.responseText);
+            // } else if(http.readyState === 4 && http.status !== 200) {
+            //     console.log("Error")
+            // } else if (http.readyState<4) {
+            //     console.log("Loading...");
+
+                var data=JSON.parse(http.responseText);
+                for (var i=0; i<data.length; i++) {
+                    console.log(data[i]);
+                    $('#content').append('<h3>'+data[i].title+'</h3><p>'+data[i].body+'</p>');
+                }
+            }
+
+
+        }
+    });
+
+    /**
+    //synchronus example
+    console.log("start");
+    console.log("middle");
+    console.log("end");
+
+    //asynchronus example
+    console.log("start");
+    setTimeout(function () {
+        console.log("middle");
+    },2000);
+    console.log("end");//out:start,end,middle-> to resolve this we use eventoop in js
+     */
+</script>
+
+</body>
+</html>
