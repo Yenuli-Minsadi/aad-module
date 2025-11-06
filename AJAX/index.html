@@ -8,10 +8,13 @@
 <h1>Welcome</h1>
 <p>This is simple html doc</p>
 <button id="btn">Click</button>
+<button id="btn-ajax">Click AJAX</button>
 <script src="jquery.js"></script>
 <!--<p id="show"></p>-->
 <div id="content" style="width: 100px; height: 100px; display: flex; border: 1px;"></div>
+<div id="content-ajax" style="width: 100px; height: 100px; display: flex; border: 1px;"></div>
 <script>
+
     $('#btn').click(function () {
         // alert('Button was clicked!')
         var http = new XMLHttpRequest();
@@ -41,20 +44,43 @@
 
         }
     });
-
     /**
-    //synchronus example
-    console.log("start");
-    console.log("middle");
-    console.log("end");
+     //synchronus example
+     console.log("start");
+     console.log("middle");
+     console.log("end");
 
-    //asynchronus example
-    console.log("start");
-    setTimeout(function () {
-        console.log("middle");
-    },2000);
-    console.log("end");//out:start,end,middle-> to resolve this we use eventoop in js
+     //asynchronus example
+     console.log("start");
+     setTimeout(function () {
+     console.log("middle");
+     },2000);
+     console.log("end");//out:start,end,middle-> to resolve this we use eventoop in js
      */
+
+    $('#btn-ajax').on('click', function () {
+        // alert("Ajax button clicked")
+        console.log('start')
+        $.ajax({
+            url: 'https://jsonplaceholder.typicode.com/posts',
+            method: 'GET',
+            async: false,
+            success: function (response)//catch the response with a para
+            {
+                // console.log(response);
+                for (let i=0; i<response.length; i++) {
+                    console.log(response[i]);
+                    $('#content-ajax').append('<h3>'+response[i].title+'</h3><p>'+response[i].body+'</p>');
+                }
+            },
+            error: function () {
+                console.log('Error');
+            }
+        })
+        console.log('end')
+    });
+    //start,end,response
+
 </script>
 
 </body>
