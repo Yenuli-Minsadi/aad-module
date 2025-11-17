@@ -18,13 +18,19 @@ public class HelloServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter out = resp.getWriter();
-        out.println("saved");
+//        out.println("saved");
+        String action = req.getParameter("action");
+        if ("save".equals(action)) {
+            out.println("save");
+        } else if ("update".equals(action)) {
+            out.println("update");
+        }
     }
 
 //    @Override
-//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        PrintWriter out = resp.getWriter();
-//        out.println("saved");
+//        out.println("updated");
 //    }
 
 }
