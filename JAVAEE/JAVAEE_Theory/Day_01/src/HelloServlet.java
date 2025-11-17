@@ -24,6 +24,8 @@ public class HelloServlet extends HttpServlet {
             out.println("save");
         } else if ("update".equals(action)) {
             out.println("update");
+        } else if ("delete".equals(action)) {
+            out.println("delete");
         }
     }
 
@@ -31,6 +33,12 @@ public class HelloServlet extends HttpServlet {
 //    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        PrintWriter out = resp.getWriter();
 //        out.println("updated");
+//    }
+
+//    @Override
+//    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        PrintWriter out = resp.getWriter();//like a scanner
+//        out.println("deleted");
 //    }
 
 }
