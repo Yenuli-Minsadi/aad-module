@@ -16,13 +16,12 @@ public class CustomerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
-        for (Customer c: cust) {
+        for(Customer c:cust){
             resp.getWriter().println("<tr>" +
-                    "<td>"+c.getId()+"</td>"+
-                    "<td>"+c.getName()+"</td>"+
-                    "<td>"+c.getAddress()+"</td>"+
+                    "<td>"+c.getId()+"</td>" +
+                    "<td>"+c.getName()+"</td>" +
+                    "<td>"+c.getAddress()+"</td>" +
                     "</tr>");
-
         }
 //        resp.getWriter().write(cust.toString());
 
@@ -31,7 +30,7 @@ public class CustomerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter out = resp.getWriter();//like a scanner
-        out.println("doPost");
+        out.print("doPost");
         String id=req.getParameter("id");
         String name=req.getParameter("name");
         String address=req.getParameter("address");

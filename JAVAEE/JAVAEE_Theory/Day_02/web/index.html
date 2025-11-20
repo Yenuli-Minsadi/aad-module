@@ -62,46 +62,14 @@
      console.log("end");//out:start,end,middle-> to resolve this we use eventoop in js
      */
 
-    $('#btn-ajax').on('click', function () {
-        $.ajax({
-            url: 'http://localhost:8080/Day_02_war_exploded/customer',
-            method: 'GET',
-            success: function (response)//catch the response with a para
-            {
-                // console.log(response);
-                for (let i=0; i<response.length; i++) {
-                    console.log(response[i]);
-                    $('#content-ajax').append('<h3>'+response[i].title+'</h3><p>'+response[i].body+'</p>');
-                }
-            },
-            error: function () {
-                console.log('Error');
-            }
-        })
-    });
-    //start,end,response: use async: false so it get synced
-
-    $('#btn-ajax-get').on('click', function () {
-        $.ajax({
-            url: 'http://localhost:8080/Day_02_war_exploded/customer',
-            method: 'GET',
-            success: function (response)//catch the response with a para
-            {
-                // console.log(response);
-                for (let i=0; i<response.length; i++) {
-                    console.log(response[i]);
-                    $('#content-ajax').append('<h3>'+response[i].title+'</h3><p>'+response[i].body+'</p>');
-                }
-            },
-            error: function () {
-                console.log('Error');
-            }
-        })
-    });
+    var cid = $('#id').val();
+    var name = $('#name').val();
+    var address = $('#address').val();
 
     $('#btn-ajax-post').on('click', function () {
+
         $.ajax({
-            url: 'http://localhost:8080/Day_02_war_exploded/customer',
+            url: "http://localhost:8080/Day_02_Application_Web_exploded/customer?id=" + cid + "&name=" + name + "&address=" + address,
             method: 'POST',
             success: function (response)//catch the response with a para
             {
@@ -118,8 +86,9 @@
     });
 
     $('#btn-ajax-put').on('click', function () {
+
         $.ajax({
-            url: 'http://localhost:8080/Day_02_war_exploded/customer',
+            url: "http://localhost:8080/Day_02_Application_Web_exploded/customer?id=" + cid + "&name=" + name + "&address=" + address,
             method: 'PUT',
             success: function (response)//catch the response with a para
             {
@@ -136,8 +105,9 @@
     });
 
     $('#btn-ajax-delete').on('click', function () {
+
         $.ajax({
-            url: 'http://localhost:8080/Day_02_war_exploded/customer',
+            url: "http://localhost:8080/Day_02_Application_Web_exploded/customer?id=" + cid + "&name=" + name + "&address=" + address,
             method: 'DELETE',
             success: function (response)//catch the response with a para
             {
@@ -152,7 +122,6 @@
             }
         })
     });
-
 </script>
 
 </body>

@@ -26,21 +26,18 @@
 <div id="content-ajax" style="width: 100px; height: 100px; display: flex; border: 1px;"></div>
 <script>
 
-    var cid = $('#id').val();
-    var name = $('#name').val();
-    var address = $('#address').val();
-    $('#btn-ajax-post').on('click', function () {
 
+    $('#btn-ajax-post').on('click', function () {
+        var cid = $('#id').val();
+        var name = $('#name').val();
+        var address = $('#address').val();
         $.ajax({
             url: "http://localhost:8080/Day_02_Application_Web_exploded/customer?id=" + cid + "&name=" + name + "&address=" + address,
             method: 'POST',
             success: function (response)//catch the response with a para
             {
-                // console.log(response);
-                for (let i=0; i<response.length; i++) {
-                    console.log(response[i]);
-                    $('#content-ajax').append('<h3>'+response[i].title+'</h3><p>'+response[i].body+'</p>');
-                }
+                console.log(response);
+
             },
             error: function () {
                 console.log('Error');
@@ -55,11 +52,8 @@
             method: 'PUT',
             success: function (response)//catch the response with a para
             {
-                // console.log(response);
-                for (let i=0; i<response.length; i++) {
-                    console.log(response[i]);
-                    $('#content-ajax').append('<h3>'+response[i].title+'</h3><p>'+response[i].body+'</p>');
-                }
+                console.log(response);
+
             },
             error: function () {
                 console.log('Error');
@@ -74,11 +68,7 @@
             method: 'DELETE',
             success: function (response)//catch the response with a para
             {
-                // console.log(response);
-                for (let i=0; i<response.length; i++) {
-                    console.log(response[i]);
-                    $('#content-ajax').append('<h3>'+response[i].title+'</h3><p>'+response[i].body+'</p>');
-                }
+                console.log(response);
             },
             error: function () {
                 console.log('Error');
@@ -93,11 +83,8 @@
             method: 'GET',
             success: function (response)//catch the response with a para
             {
-                // console.log(response);
-                for (let i=0; i<response.length; i++) {
-                    console.log(response[i]);
-                    $('#content-ajax').append('<h3>'+response[i].title+'</h3><p>'+response[i].body+'</p>');
-                }
+                console.log(response);
+
             },
             error: function () {
                 console.log('Error');
