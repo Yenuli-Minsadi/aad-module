@@ -17,6 +17,7 @@
 <button id="btn-ajax-post">Save</button>
 <button id="btn-ajax-put">Update</button>
 <button id="btn-ajax-delete">Delete</button>
+<button id="btn-ajax-getAll">Get All</button>
 <script src="jquery.js"></script>
 <!--<p id="show"></p>-->
 <div id="content" style="width: 100px; height: 100px; display: flex; border: 1px;">
@@ -24,34 +25,6 @@
 </div>
 <div id="content-ajax" style="width: 100px; height: 100px; display: flex; border: 1px;"></div>
 <script>
-
-    $('#btn').click(function () {
-        // alert('Button was clicked!')
-        var http = new XMLHttpRequest();
-        http.open('GET', 'https://jsonplaceholder.typicode.com/posts');// 2nd step: tells need 2 args-> request krna data eke type and source/endpoint
-        http.send();//1st step: tells state not open
-        //onreadystatechange bcoz after clickin btn it takes a few time to bring response
-        //js doesnt have threads, its a single threaded scripting lang thereby
-        //it has event loop to get multi threading effect even though single threaded
-        http.onreadystatechange = function () {
-            if (http.readyState === 4 && http.status === 200) {
-                // $('#show').post(function (event) {
-                //     http.responseText
-                // });
-                console.log(http.responseText);
-                // } else if(http.readyState === 4 && http.status !== 200) {
-                //     console.log("Error")
-                // } else if (http.readyState<4) {
-                //     console.log("Loading...");
-
-                var data=JSON.parse(http.responseText);
-                for (var i=0; i<data.length; i++) {
-                    console.log(data[i]);
-                    $('#content').append('<h3>'+data[i].title+'</h3><p>'+data[i].body+'</p>');
-                }
-            }
-        }
-    });
 
     var cid = $('#id').val();
     var name = $('#name').val();
@@ -99,6 +72,25 @@
         $.ajax({
             url: "http://localhost:8080/Day_02_Application_Web_exploded/customer?id=" + cid + "&name=" + name + "&address=" + address,
             method: 'DELETE',
+            success: function (response)//catch the response with a para
+            {
+                // console.log(response);
+                for (let i=0; i<response.length; i++) {
+                    console.log(response[i]);
+                    $('#content-ajax').append('<h3>'+response[i].title+'</h3><p>'+response[i].body+'</p>');
+                }
+            },
+            error: function () {
+                console.log('Error');
+            }
+        })
+    });
+
+    $('#btn-ajax-getAll').on('click', function () {
+
+        $.ajax({
+            url: "http://localhost:8080/Day_02_Application_Web_exploded/customer",
+            method: 'GET',
             success: function (response)//catch the response with a para
             {
                 // console.log(response);

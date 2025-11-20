@@ -15,12 +15,17 @@ public class CustomerServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/html;charset=UTF-8");
         for (Customer c: cust) {
-            System.out.println("" +
-                    "CID:"+c.getId()+
-                    "CName:"+c.getName()+
-                    "CaAddress"+c.getAddress());
+            resp.getWriter().println("<tr>" +
+                    "<td>"+c.getId()+"</td>"+
+                    "<td>"+c.getName()+"</td>"+
+                    "<td>"+c.getAddress()+"</td>"+
+                    "</tr>");
+
         }
+//        resp.getWriter().write(cust.toString());
+
     }
 
     @Override
