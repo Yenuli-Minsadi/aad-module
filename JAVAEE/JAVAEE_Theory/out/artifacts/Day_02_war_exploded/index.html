@@ -9,9 +9,15 @@
 <p>This is simple html doc</p>
 <button id="btn">Click</button>
 <button id="btn-ajax">Click AJAX</button>
+<!--<button id="btn-ajax-get">GET</button>-->
+<!--<button id="btn-ajax-post">POST</button>-->
+<!--<button id="btn-ajax-put">PUT</button>-->
+<!--<button id="btn-ajax-delete">DELETE</button>-->
 <script src="jquery.js"></script>
 <!--<p id="show"></p>-->
-<div id="content" style="width: 100px; height: 100px; display: flex; border: 1px;"></div>
+<div id="content" style="width: 100px; height: 100px; display: flex; border: 1px;">
+
+</div>
 <div id="content-ajax" style="width: 100px; height: 100px; display: flex; border: 1px;"></div>
 <script>
 
@@ -29,10 +35,10 @@
                 //     http.responseText
                 // });
                 console.log(http.responseText);
-            // } else if(http.readyState === 4 && http.status !== 200) {
-            //     console.log("Error")
-            // } else if (http.readyState<4) {
-            //     console.log("Loading...");
+                // } else if(http.readyState === 4 && http.status !== 200) {
+                //     console.log("Error")
+                // } else if (http.readyState<4) {
+                //     console.log("Loading...");
 
                 var data=JSON.parse(http.responseText);
                 for (var i=0; i<data.length; i++) {
@@ -62,7 +68,6 @@
         $.ajax({
             url: 'http://localhost:8080/Day_02_war_exploded/customer',
             method: 'GET',
-            async: false,
             success: function (response)//catch the response with a para
             {
                 // console.log(response);
