@@ -9,10 +9,10 @@
 <p>This is simple html doc</p>
 <button id="btn">Click</button>
 <button id="btn-ajax">Click AJAX</button>
-<!--<button id="btn-ajax-get">GET</button>-->
-<!--<button id="btn-ajax-post">POST</button>-->
-<!--<button id="btn-ajax-put">PUT</button>-->
-<!--<button id="btn-ajax-delete">DELETE</button>-->
+<button id="btn-ajax-get">GET</button>
+<button id="btn-ajax-post">POST</button>
+<button id="btn-ajax-put">PUT</button>
+<button id="btn-ajax-delete">DELETE</button>
 <script src="jquery.js"></script>
 <!--<p id="show"></p>-->
 <div id="content" style="width: 100px; height: 100px; display: flex; border: 1px;">
@@ -63,8 +63,6 @@
      */
 
     $('#btn-ajax').on('click', function () {
-        // alert("Ajax button clicked")
-        console.log('start')
         $.ajax({
             url: 'http://localhost:8080/Day_02_war_exploded/customer',
             method: 'GET',
@@ -80,9 +78,80 @@
                 console.log('Error');
             }
         })
-        console.log('end')
     });
     //start,end,response: use async: false so it get synced
+
+    $('#btn-ajax-get').on('click', function () {
+        $.ajax({
+            url: 'http://localhost:8080/Day_02_war_exploded/customer',
+            method: 'GET',
+            success: function (response)//catch the response with a para
+            {
+                // console.log(response);
+                for (let i=0; i<response.length; i++) {
+                    console.log(response[i]);
+                    $('#content-ajax').append('<h3>'+response[i].title+'</h3><p>'+response[i].body+'</p>');
+                }
+            },
+            error: function () {
+                console.log('Error');
+            }
+        })
+    });
+
+    $('#btn-ajax-post').on('click', function () {
+        $.ajax({
+            url: 'http://localhost:8080/Day_02_war_exploded/customer',
+            method: 'POST',
+            success: function (response)//catch the response with a para
+            {
+                // console.log(response);
+                for (let i=0; i<response.length; i++) {
+                    console.log(response[i]);
+                    $('#content-ajax').append('<h3>'+response[i].title+'</h3><p>'+response[i].body+'</p>');
+                }
+            },
+            error: function () {
+                console.log('Error');
+            }
+        })
+    });
+
+    $('#btn-ajax-put').on('click', function () {
+        $.ajax({
+            url: 'http://localhost:8080/Day_02_war_exploded/customer',
+            method: 'PUT',
+            success: function (response)//catch the response with a para
+            {
+                // console.log(response);
+                for (let i=0; i<response.length; i++) {
+                    console.log(response[i]);
+                    $('#content-ajax').append('<h3>'+response[i].title+'</h3><p>'+response[i].body+'</p>');
+                }
+            },
+            error: function () {
+                console.log('Error');
+            }
+        })
+    });
+
+    $('#btn-ajax-delete').on('click', function () {
+        $.ajax({
+            url: 'http://localhost:8080/Day_02_war_exploded/customer',
+            method: 'DELETE',
+            success: function (response)//catch the response with a para
+            {
+                // console.log(response);
+                for (let i=0; i<response.length; i++) {
+                    console.log(response[i]);
+                    $('#content-ajax').append('<h3>'+response[i].title+'</h3><p>'+response[i].body+'</p>');
+                }
+            },
+            error: function () {
+                console.log('Error');
+            }
+        })
+    });
 
 </script>
 

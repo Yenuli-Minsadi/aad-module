@@ -16,11 +16,11 @@ public class CustomerServlet extends HttpServlet {
         out.println("customer");
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        PrintWriter out = resp.getWriter();//like a scanner
-        out.println("customer");
-    }
+//    @Override
+//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        PrintWriter out = resp.getWriter();//like a scanner
+//        out.println("customer");
+//    }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
