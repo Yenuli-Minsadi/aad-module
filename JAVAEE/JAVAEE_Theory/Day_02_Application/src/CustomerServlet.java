@@ -68,6 +68,5 @@ public class CustomerServlet extends HttpServlet {
             }
         }
         resp.getWriter().println("customer not found");
-
     }
 }

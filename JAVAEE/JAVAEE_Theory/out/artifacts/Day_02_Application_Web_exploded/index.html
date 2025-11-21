@@ -45,6 +45,9 @@
     });
 
     $('#btn-ajax-put').on('click', function () {
+        var cid = $('#id').val();
+        var name = $('#name').val();
+        var address = $('#address').val();
 
         $.ajax({
             url: "http://localhost:8080/Day_02_Application_Web_exploded/customer?id=" + cid + "&name=" + name + "&address=" + address,
@@ -61,9 +64,10 @@
     });
 
     $('#btn-ajax-delete').on('click', function () {
+        var cid = $('#id').val();
 
         $.ajax({
-            url: "http://localhost:8080/Day_02_Application_Web_exploded/customer?id=" + cid + "&name=" + name + "&address=" + address,
+            url: "http://localhost:8080/Day_02_Application_Web_exploded/customer?id=" + cid,
             method: 'DELETE',
             success: function (response)//catch the response with a para
             {
