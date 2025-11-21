@@ -37,7 +37,6 @@
             success: function (response)//catch the response with a para
             {
                 console.log(response);
-
             },
             error: function () {
                 console.log('Error');
@@ -84,7 +83,11 @@
             success: function (response)//catch the response with a para
             {
                 console.log(response);
-
+                // for (let i=0; i<response.length; i++) {
+                //     console.log(response[i]);
+                //     $('content-ajax').append('<p>'+response[i].title+response[i].body+'</p>');
+                // }
+                $('#content-ajax').append(response);
             },
             error: function () {
                 console.log('Error');
