@@ -1,8 +1,8 @@
 public class Customer {
 
-    private final String id;
-    private final String name;
-    private final String address;
+    private String id;
+    private String name;
+    private String address;
 
     public Customer(String id, String name, String address) {
         this.id=id;
@@ -23,4 +23,11 @@ public class Customer {
     }
 
 
+    public void setName(String name) {
+        this.name=name;
+    }
+
+    public void setAddress(String address) {
+        this.address=address;
+    }
 }

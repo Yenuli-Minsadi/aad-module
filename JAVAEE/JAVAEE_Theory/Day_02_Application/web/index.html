@@ -5,14 +5,12 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Welcome</h1>
-<p>This is simple html doc</p>
-<!--<button id="btn">Click</button>-->
-<!--<button id="btn-ajax">Click AJAX</button>-->
-<!--<button id="btn-ajax-get">Save</button>-->
+
+<form>
 <input id="id" type="text" placeholder="Enter ID">
 <input id="name" type="text" placeholder="Name">
 <input id="address" type="text" placeholder="Address">
+</form>
 
 <button id="btn-ajax-post">Save</button>
 <button id="btn-ajax-put">Update</button>
@@ -31,6 +29,7 @@
         var cid = $('#id').val();
         var name = $('#name').val();
         var address = $('#address').val();
+
         $.ajax({
             url: "http://localhost:8080/Day_02_Application_Web_exploded/customer?id=" + cid + "&name=" + name + "&address=" + address,
             method: 'POST',

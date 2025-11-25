@@ -27,6 +27,7 @@ public class CustomerServlet extends HttpServlet {
 
     }
 
+    //dont let save an existing id
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter out = resp.getWriter();//like a scanner
@@ -48,8 +49,8 @@ public class CustomerServlet extends HttpServlet {
         String address=req.getParameter("address");
         for (Customer c: cust) {
             if (c.getId().equals(id)) {
-                cust.remove(c);
-                cust.add(new Customer(id,name,address));
+                c.setName(name);
+                c.setAddress(address);
                 resp.getWriter().println("customer updated");
                 return;
             }
