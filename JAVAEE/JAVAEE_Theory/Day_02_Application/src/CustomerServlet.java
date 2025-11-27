@@ -20,54 +20,82 @@ public class CustomerServlet extends HttpServlet {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/javaeeapp",
+            Connection connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/javaeeapp",
                     "root","1234");
-
-            PreparedStatement ps = null;
-            ResultSet rs;
-
-            if (id == null) {
-                // Get All
-                ps = conn.prepareStatement("select * from customer");
-
-            } else {
-                // Get by ID
-                for (Customer c : cust) {
-                    if (c.getId().equals(id)) {
-                        ps = conn.prepareStatement("SELECT * FROM customer WHERE id = ?");
-                        ps.setString(1, id);
-                    }
+            if (id==null) {
+                String query="SELECT * FROM customer";
+                PreparedStatement preparedStatement=connection.prepareStatement(query);
+                ResultSet resultSet=preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    String cId=resultSet.getString("id");
+                    String cName=resultSet.getString("name");
+                    String cAddress=resultSet.getString("address");
+                    resp.getWriter().println(cId+","+cName+","+cAddress);
                 }
-                
-                resp.getWriter().println("Customer not found");
+            }else  {
+                String query="SELECT * FROM customer WHERE id=?";
+                PreparedStatement preparedStatement=connection.prepareStatement(query);
+                preparedStatement.setString(1,id);
+                ResultSet resultSet=preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    String cId=resultSet.getString("id");
+                    String cName=resultSet.getString("name");
+                    String cAddress=resultSet.getString("address");
+                    resp.getWriter().println(cId+","+cName+","+cAddress);
+                }
             }
-            rs = ps.executeQuery();
-            resp.setContentType("text/plain");
-            PrintWriter out = resp.getWriter();
-
-            boolean found = false;
-            while (rs.next()) {
-                found = true;
-                out.println(
-                        rs.getString("id") + " - " +
-                                rs.getString("name") + " - " +
-                                rs.getString("address")
-                );
-            }
-
-            if (!found) {
-                out.println("Customer not found");
-            }
-
-            rs.close();
-            ps.close();
-            conn.close();
-            
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+//        try {
+//            Class.forName("com.mysql.cj.jdbc.Driver");
+//            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/javaeeapp",
+//                    "root","1234");
+//
+//            PreparedStatement ps = null;
+//            ResultSet rs;
+//
+//            if (id == null) {
+//                // Get All
+//                ps = conn.prepareStatement("select * from customer");
+//
+//            } else {
+//                // Get by ID
+//                for (Customer c : cust) {
+//                    if (c.getId().equals(id)) {
+//                        ps = conn.prepareStatement("SELECT * FROM customer WHERE id = ?");
+//                        ps.setString(1, id);
+//                    }
+//                }
+//
+//                resp.getWriter().println("Customer not found");
+//            }
+//            rs = ps.executeQuery();
+//            resp.setContentType("text/plain");
+//            PrintWriter out = resp.getWriter();
+//
+//            boolean found = false;
+//            while (rs.next()) {
+//                found = true;
+//                out.println(
+//                        rs.getString("id") + " - " +
+//                                rs.getString("name") + " - " +
+//                                rs.getString("address")
+//                );
+//            }
+//
+//            if (!found) {
+//                out.println("Customer not found");
+//            }
+//
+//        } catch (ClassNotFoundException e) {
+//            throw new RuntimeException(e);
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
 
 //        resp.setContentType("text/html;charset=UTF-8");
 //        for(Customer c:cust){
@@ -166,6 +194,28 @@ public class CustomerServlet extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id=req.getParameter("id");
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/javaeeapp",
+                    "root","1234");
+            String query = "DELETE from customer  WHERE id=?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1,id);
+            int rowsDeleted = ps.executeUpdate();  // MUST EXECUTE!
+
+            if (rowsDeleted > 0) {
+                // Also remove from ArrayList
+                cust.removeIf(c -> c.getId().equals(id));
+                resp.getWriter().println("Customer deleted successfully");
+            } else {
+                resp.getWriter().println("Customer not found in DB");
+            }
+
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         for (Customer c: cust) {
             if (c.getId().equals(id)) {
                 cust.remove(c);
