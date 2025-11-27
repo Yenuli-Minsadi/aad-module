@@ -6,10 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,21 +17,56 @@ public class CustomerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
-        
-        if (id == null) {
-            // Get All
-            for (Customer c : cust) {
-                resp.getWriter().println(c.getId() + " - " + c.getName() + " - " + c.getAddress());
-            }
-        } else {
-            // Get by ID
-            for (Customer c : cust) {
-                if (c.getId().equals(id)) {
-                    resp.getWriter().println(c.getId() + " - " + c.getName() + " - " + c.getAddress());
-                    return;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/javaeeapp",
+                    "root","1234");
+
+            PreparedStatement ps = null;
+            ResultSet rs;
+
+            if (id == null) {
+                // Get All
+                ps = conn.prepareStatement("select * from customer");
+
+            } else {
+                // Get by ID
+                for (Customer c : cust) {
+                    if (c.getId().equals(id)) {
+                        ps = conn.prepareStatement("SELECT * FROM customer WHERE id = ?");
+                        ps.setString(1, id);
+                    }
                 }
+                
+                resp.getWriter().println("Customer not found");
             }
-            resp.getWriter().println("Customer not found");
+            rs = ps.executeQuery();
+            resp.setContentType("text/plain");
+            PrintWriter out = resp.getWriter();
+
+            boolean found = false;
+            while (rs.next()) {
+                found = true;
+                out.println(
+                        rs.getString("id") + " - " +
+                                rs.getString("name") + " - " +
+                                rs.getString("address")
+                );
+            }
+
+            if (!found) {
+                out.println("Customer not found");
+            }
+
+            rs.close();
+            ps.close();
+            conn.close();
+            
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
 //        resp.setContentType("text/html;charset=UTF-8");
