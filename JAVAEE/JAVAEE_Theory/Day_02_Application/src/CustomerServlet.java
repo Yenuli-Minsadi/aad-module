@@ -20,7 +20,7 @@ public class CustomerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
-
+        
         if (id == null) {
             // Get All
             for (Customer c : cust) {
@@ -74,6 +74,7 @@ public class CustomerServlet extends HttpServlet {
             } else {
                 resp.getWriter().println("Customer saved failed");
             }
+
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {
@@ -92,6 +93,31 @@ public class CustomerServlet extends HttpServlet {
         String id=req.getParameter("id");
         String name=req.getParameter("name");
         String address=req.getParameter("address");
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/javaeeapp",
+                    "root","1234");
+            String query = "UPDATE customer SET name=?,address=? WHERE id=?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1,name);
+            ps.setString(2,address);
+            ps.setString(3,id);
+            int rowInserted = ps.executeUpdate();
+
+            if (rowInserted>0) {
+                resp.getWriter().println("Customer successfully updated");
+            } else {
+                resp.getWriter().println("Customer update failed");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
         for (Customer c: cust) {
             if (c.getId().equals(id)) {
 //                c.setName(name);
