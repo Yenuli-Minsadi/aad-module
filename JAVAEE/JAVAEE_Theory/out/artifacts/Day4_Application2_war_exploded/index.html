@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #form {
+            background: lightblue;
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            width: 70vw;
+        }
+
+        input {
+            margin: 8px;
+        }
+
+        button {
+            margin: 5px 60px;
+            background: black;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<form id="form">
+<input id="id" type="text" placeholder="Enter ID">
+<input id="name" type="text" placeholder="Name">
+<input id="address" type="text" placeholder="Address">
+</form>
+
+<button id="btn-ajax-post">Save</button>
+<button id="btn-ajax-put">Update</button>
+<button id="btn-ajax-delete">Delete</button>
+<!--<button id="btn-ajax-getCust">Delete</button>-->
+<button id="btn-ajax-getAll">Get All</button>
+<script src="jquery.js"></script>
+<!--<p id="show"></p>-->
+<div id="content" style="width: 100px; height: 100px; display: flex; border: 1px;">
+
+</div>
+<div id="content-ajax" style="width: 100px; height: 100px; display: flex; border: 1px;"></div>
+<script>
+
+
+    $('#btn-ajax-post').on('click', function () {
+        var cid = $('#id').val();
+        var name = $('#name').val();
+        var address = $('#address').val();
+
+        $.ajax({
+            url: "http://localhost:8080/Day4-Application2_Web_exploded/dbcp?id=" + cid + "&name=" + name + "&address=" + address,
+            method: 'POST',
+            success: function (response)//catch the response with a para
+            {
+                console.log(response);
+            },
+            error: function () {
+                console.log('Error');
+            }
+        })
+    });
+
+    $('#btn-ajax-put').on('click', function () {
+        var cid = $('#id').val();
+        var name = $('#name').val();
+        var address = $('#address').val();
+
+        $.ajax({
+            url: "http://localhost:8080/Day4-Application2_Web_exploded/dbcp?id=" + cid + "&name=" + name + "&address=" + address,
+            method: 'PUT',
+            success: function (response)//catch the response with a para
+            {
+                console.log(response);
+
+            },
+            error: function () {
+                console.log('Error');
+            }
+        })
+    });
+
+    $('#btn-ajax-delete').on('click', function () {
+        var cid = $('#id').val();
+
+        $.ajax({
+            url: "http://localhost:8080/Day4-Application2_Web_exploded/dbcp?id=" + cid,
+            method: 'DELETE',
+            success: function (response)//catch the response with a para
+            {
+                console.log(response);
+            },
+            error: function () {
+                console.log('Error');
+            }
+        })
+    });
+
+    $('#btn-ajax-getAll').on('click', function () {
+
+        $.ajax({
+            url: "http://localhost:8080/Day4-Application2_Web_exploded/dbcp",
+            method: 'GET',
+            success: function (response)//catch the response with a para
+            {
+                console.log(response);
+                // for (let i=0; i<response.length; i++) {
+                //     console.log(response[i]);
+                //     $('content-ajax').append('<p>'+response[i].title+response[i].body+'</p>');
+                // }
+                $('#content-ajax').append(response);
+            },
+            error: function () {
+                console.log('Error');
+            }
+        })
+    });
+
+</script>
+
+</body>
+</html>
