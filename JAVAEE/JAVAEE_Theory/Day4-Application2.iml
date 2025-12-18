@@ -26,6 +26,11 @@
         <webroots>
           <root url="file://$MODULE_DIR$/Day4-Application2/web" relative="/" />
         </webroots>
+        <sourceRoots>
+          <root url="file://$MODULE_DIR$/Day4-Application2/src/main/java" />
+          <root url="file://$MODULE_DIR$/Day4-Application2/src/main/resources" />
+          <root url="file://$MODULE_DIR$/Day4-Application2/target/generated-sources/annotations" />
+        </sourceRoots>
       </configuration>
     </facet>
   </component>
