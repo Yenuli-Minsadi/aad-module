@@ -16,7 +16,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-@WebServlet (urlPatterns = "/data-format")
+//Path Variables
+@WebServlet (urlPatterns = "/data-format/*")
 @MultipartConfig
 public class DataFormatServlet extends HttpServlet {
     @Override
@@ -29,6 +30,9 @@ public class DataFormatServlet extends HttpServlet {
 //        System.out.println(req.getParameter("name"));
 
         //2.path variable
+        System.out.println(req.getPathInfo());
+        System.out.println(req.getPathInfo().substring(1));
+
 
         //3.x-www-form-url-encoded
 //        System.out.println(req.getParameter("id"));
