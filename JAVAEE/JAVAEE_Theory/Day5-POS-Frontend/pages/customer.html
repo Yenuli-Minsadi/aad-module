@@ -21,13 +21,24 @@
     <button onclick="deleteCustomer()">Delete</button>
 </div>
 <div>
-    <table id = "customer-table"></table>
+    <table id="customer-table">
+        <thead>
+        <tr>
+            <th>Customer Id</th>
+            <th>Customer Name</th>
+            <th>Customer Address</th>
+        </tr>
+        </thead>
+        <tbody id="customer-list">
+
+        </tbody>
+    </table>
 </div>
-<script src="../assets/js/jquery.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script>
-    window.onload(
-        getAllCustomer() 
-    )
+    // window.onload(
+    //     getAllCustomer()
+    // )
     function saveCustomer() {
         const cid = $('#cust-id').val();
         const cname = $('#cust-name').val();
@@ -45,6 +56,7 @@
             }),
             success: function (resp) {
                 console.log(resp);
+                getAllCustomer();
             },
             error: function (error) {
                 console.log(error);
@@ -52,9 +64,49 @@
         })
     }
 
-    function updateCustomer() {}
+    function updateCustomer() {
+        const cid = $('#cust-id').val();
+        const cname = $('#cust-name').val();
+        const caddress = $('#cust-address').val();
+        alert(cid+cname+caddress);
 
-    function deleteCustomer() {}
+        $.ajax({
+            url: 'http://localhost:8080/Day5_POS_Backend_Web_exploded/api/v1/customer',
+            method: 'PUT',
+            contentType: 'application/json',
+            data:JSON.stringify({
+                "cid":cid,
+                "cname": cname,
+                "caddress": caddress,
+            }),
+            success: function (resp) {
+                console.log(resp);
+                getAllCustomer();
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+    }
+
+    function deleteCustomer() {
+        const cid = $('#cust-id').val();
+
+        // alert(cid+cname+caddress);
+
+        $.ajax({
+            url: 'http://localhost:8080/Day5_POS_Backend_Web_exploded/api/v1/customer?cid'+cid,
+            method: 'DELETE',
+            contentType: 'application/json',
+            success: function (resp) {
+                console.log(resp);
+                getAllCustomer();
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+    }
     function getAllCustomer() {
         $.ajax({
             url:'http://localhost:8080/Day5_POS_Backend_Web_exploded/api/v1/customer',

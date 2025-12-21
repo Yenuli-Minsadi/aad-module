@@ -1,6 +1,7 @@
 package edu;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -9,7 +10,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.apache.commons.dbcp2.ConnectionFactory;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -20,7 +20,6 @@ import java.sql.SQLException;
 @WebServlet(urlPatterns = "/api/v1/customer")
 public class CustomerServlet extends HttpServlet {
     BasicDataSource ds;
-
     @Override
     public void init() throws ServletException {
         ServletContext servletContext = getServletContext();
@@ -34,43 +33,25 @@ public class CustomerServlet extends HttpServlet {
         String id = jsonObject.get("cid").getAsString();
         String name = jsonObject.get("cname").getAsString();
         String address = jsonObject.get("caddress").getAsString();
-//        System.out.println(id+name+address);
+
         try {
-            Connection conn = ds.getConnection();
-            String query = "INSERT INTO customer (id,name,address) VALUES (?,?,?)";
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setString(1, id);
-            ps.setString(2, name);
-            ps.setString(3, address);
-            int rowInserted = ps.executeUpdate();
-            if (rowInserted > 0) {
-                resp.getWriter().println("Customer Saved successfully");
-            } else {
-                resp.getWriter().println("Customer Saving failed");
+            Connection connection=ds.getConnection();
+            String query="INSERT INTO customer (id,name,address) VALUES (?,?,?)";
+            PreparedStatement preparedStatement=connection.prepareStatement(query);
+            preparedStatement.setString(1,id);
+            preparedStatement.setString(2,name);
+            preparedStatement.setString(3,address);
+            int rowInserted=preparedStatement.executeUpdate();
+            if(rowInserted>0){
+                resp.getWriter().println("Customer Saved Successfully");
+            }else {
+                resp.getWriter().println("Customer Saved Failed");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException {
-        try {
-            Connection conn = ds.getConnection();
-            String query = "SELECT * FROM customer";
-            PreparedStatement preparedStatement=conn.prepareStatement(query);
-            ResultSet resultSet=preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                String cId=resultSet.getString("id");
-                String cName=resultSet.getString("name");
-                String cAddress=resultSet.getString("address");
 
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Override
@@ -80,19 +61,19 @@ public class CustomerServlet extends HttpServlet {
         String id = jsonObject.get("cid").getAsString();
         String name = jsonObject.get("cname").getAsString();
         String address = jsonObject.get("caddress").getAsString();
-//        System.out.println(id+name+address);
+
         try {
-            Connection conn = ds.getConnection();
-            String query = "UPDATE INTO customer (id,name,address) VALUES (?,?,?)";
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setString(1, id);
-            ps.setString(2, name);
-            ps.setString(3, address);
-            int rowInserted = ps.executeUpdate();
-            if (rowInserted > 0) {
-                resp.getWriter().println("Customer Saved successfully");
-            } else {
-                resp.getWriter().println("Customer Saving failed");
+            Connection connection=ds.getConnection();
+            String query="UPDATE customer SET name=?,address=? WHERE id=?";
+            PreparedStatement preparedStatement=connection.prepareStatement(query);
+            preparedStatement.setString(1,name);
+            preparedStatement.setString(2,address);
+            preparedStatement.setString(3,id);
+            int rowInserted=preparedStatement.executeUpdate();
+            if(rowInserted>0){
+                resp.getWriter().println("Customer Updated Successfully");
+            }else {
+                resp.getWriter().println("Customer Updated Failed");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -100,15 +81,55 @@ public class CustomerServlet extends HttpServlet {
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException {
-        System.out.println("do delete invoked");
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            Connection connection= ds.getConnection();
+            String query="SELECT * FROM customer";
+            PreparedStatement preparedStatement=connection.prepareStatement(query);
+            ResultSet resultSet=preparedStatement.executeQuery();
+            JsonArray customerList=new JsonArray();
+            while (resultSet.next()) {
+                String cId=resultSet.getString("id");
+                String cName=resultSet.getString("name");
+                String cAddress=resultSet.getString("address");
+                JsonObject jsonObject=new JsonObject();
+                jsonObject.addProperty("cid",cId);
+                jsonObject.addProperty("cname",cName);
+                jsonObject.addProperty("caddress",cAddress);
+                customerList.add(jsonObject);
+            }
+            resp.getWriter().println(customerList);
+            resp.setContentType("application/json");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String id = req.getParameter("cid");
+        try {
+            Connection connection=ds.getConnection();
+            String query="delete from customer WHERE id=?";
+            PreparedStatement preparedStatement=connection.prepareStatement(query);
+            preparedStatement.setString(1,id);
+            int rowInserted=preparedStatement.executeUpdate();
+            if(rowInserted>0){
+                resp.getWriter().println("Customer Deleted Successfully");
+            }else {
+                resp.getWriter().println("Customer Deleted Failed");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    //what is cors ?
+    //cors origin resource sharing is a mechanism that allows a server to tell browser
+    //"this origin is allowed to access my resources"
 
-//    @Override
-//    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException {
-//        System.out.println("do Options invoked");
-//        resp.setHeader("Access-Control-Allow-Origin", "*");
-//        resp.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-//        resp.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//    }
+    // WHY CORS? - To protect users
+    // WHAT? - Browser Security rule
+    // How? - Sever sends permission headers
+    // Where? - Happens only in browsers
+    // Fix? - Add CORS headers
+
 }

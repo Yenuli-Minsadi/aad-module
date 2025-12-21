@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7fbb39de-565d-4cc6-bc2e-d830e1c7de12" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/JAVAEE_Theory/Day5_POS_Frontend/Day5_POS_Frontend.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JAVAEE_Theory/Day_01/web/web2/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVAEE_Theory/.idea/artifacts/Day5_POS_Backend_Web_exploded.xml" beforeDir="false" afterPath="$PROJECT_DIR$/JAVAEE_Theory/.idea/artifacts/Day5_POS_Backend_Web_exploded.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVAEE_Theory/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/JAVAEE_Theory/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVAEE_Theory/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/JAVAEE_Theory/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVAEE_Theory/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/JAVAEE_Theory/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVAEE_Theory/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/JAVAEE_Theory/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVAEE_Theory/Day5-POS-Backend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/JAVAEE_Theory/Day5_POS_Backend.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVAEE_Theory/Day5-POS-Backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/JAVAEE_Theory/Day5_POS_Backend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVAEE_Theory/Day5-POS-Backend/src/main/java/edu/CORSFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/JAVAEE_Theory/Day5_POS_Backend/src/main/java/edu/CORSFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVAEE_Theory/Day5-POS-Backend/src/main/java/edu/CustomerServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/JAVAEE_Theory/Day5_POS_Backend/src/main/java/edu/CustomerServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVAEE_Theory/Day5-POS-Backend/src/main/java/edu/DBConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/JAVAEE_Theory/Day5_POS_Backend/src/main/java/edu/DBConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVAEE_Theory/Day5-POS-Backend/target/classes/edu/CORSFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVAEE_Theory/Day5-POS-Backend/target/classes/edu/CustomerServlet.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVAEE_Theory/Day5-POS-Backend/target/classes/edu/DBConnection.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVAEE_Theory/Day5-POS-Backend/web/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/JAVAEE_Theory/Day5_POS_Backend/web/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVAEE_Theory/Day5-POS-Backend/web2/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/JAVAEE_Theory/Day5_POS_Backend/web/web/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVAEE_Theory/Day5-POS-Frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/JAVAEE_Theory/Day5_POS_Frontend/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVAEE_Theory/Day5-POS-Frontend/js/jquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/JAVAEE_Theory/Day5_POS_Frontend/js/jquery.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVAEE_Theory/Day5-POS-Frontend/pages/customer.html" beforeDir="false" afterPath="$PROJECT_DIR$/JAVAEE_Theory/Day5_POS_Frontend/pages/customer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVAEE_Theory/Day5-POS-Frontend/pages/item.html" beforeDir="false" afterPath="$PROJECT_DIR$/JAVAEE_Theory/Day5_POS_Frontend/pages/item.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVAEE_Theory/Day5-POS-Frontend/pages/order.html" beforeDir="false" afterPath="$PROJECT_DIR$/JAVAEE_Theory/Day5_POS_Frontend/pages/order.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVAEE_Theory/Day_01/Day_01.iml" beforeDir="false" afterPath="$PROJECT_DIR$/JAVAEE_Theory/Day_01/Day_01.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVAEE_Theory/JAVAEE_Theory.iml" beforeDir="false" afterPath="$PROJECT_DIR$/JAVAEE_Theory/JAVAEE_Theory.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVAEE_Theory/out/artifacts/Day5_POS_Backend_Web_exploded/WEB-INF/classes/edu/CORSFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVAEE_Theory/out/artifacts/Day5_POS_Backend_Web_exploded/WEB-INF/classes/edu/CustomerServlet.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVAEE_Theory/out/artifacts/Day5_POS_Backend_Web_exploded/WEB-INF/classes/edu/DBConnection.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVAEE_Theory/out/artifacts/Day5_POS_Backend_Web_exploded/WEB-INF/web.xml" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 2
+}]]></component>
+  <component name="ProjectId" id="378ElBas00XSiJQwANtDwxtsFmD" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "F:/IJSE-GDSE73/Sem2/AAD/JAVAEE",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.25410.129" />
+        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-IU-251.25410.129" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7fbb39de-565d-4cc6-bc2e-d830e1c7de12" name="Changes" comment="" />
+      <created>1766276447355</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1766276447355</updated>
+      <workItem from="1766276454914" duration="95000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
