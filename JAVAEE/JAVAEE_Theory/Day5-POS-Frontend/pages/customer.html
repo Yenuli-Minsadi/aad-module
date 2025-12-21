@@ -95,7 +95,7 @@
         // alert(cid+cname+caddress);
 
         $.ajax({
-            url: 'http://localhost:8080/Day5_POS_Backend_Web_exploded/api/v1/customer?cid'+cid,
+            url: 'http://localhost:8080/Day5_POS_Backend_Web_exploded/api/v1/customer?cid='+cid,
             method: 'DELETE',
             contentType: 'application/json',
             success: function (resp) {
