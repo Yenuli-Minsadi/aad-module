@@ -11,6 +11,124 @@
    <button onclick="window.location.href='customer.html'">Customer</button>
    <button onclick="window.location.href='order.html'">Order</button>
 </div>
+<div>
+    <input type="text" id="item-id" placeholder="Item Id">
+    <input type="text" id="item-name" placeholder="Item Name">
+    <input type="text" id="item-price" placeholder="Item price">
+    <input type="text" id="item-quantity" placeholder="Item quantity">
+    <button onclick="saveItem()">Save</button>
+    <button onclick="updateItem()">Update</button>
+    <button onclick="deleteItem()">Delete</button>
+</div>
+<div>
+    <table id="item-table">
+        <thead>
+        <tr>
+            <th>Item Id</th>
+            <th>Item Name</th>
+            <th>Item Price</th>
+            <th>Item Quantity</th>
+        </tr>
+        </thead>
+        <tbody id="item-list">
 
+        </tbody>
+    </table>
+</div>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+    // window.onload(
+    //     getAllCustomer()
+    // )
+    function saveItem() {
+        const iid = $('#item-id').val();
+        const iname = $('#item-name').val();
+        const iprice = $('#item-price').val();
+        const iquantity = $('#item-quantity').val();
+        alert(iid+iname+iprice+iquantity);
+
+        $.ajax({
+            url: 'http://localhost:8080/Day5_POS_Backend_Web_exploded/api/v1/item',
+            method: 'POST',
+            contentType: 'application/json',
+            data:JSON.stringify({
+                "iid":iid,
+                "iname": iname,
+                "iprice": iprice,
+                "iquantity": iquantity,
+            }),
+            success: function (resp) {
+                console.log(resp);
+                getAllItems();
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+    }
+
+    function updateItem() {
+        const iid = $('#item-id').val();
+        const iname = $('#item-name').val();
+        const iprice = $('#item-price').val();
+        const iquantity = $('#item-quantity').val();
+        alert(iid+iname+iprice+iquantity);
+
+        $.ajax({
+            url: 'http://localhost:8080/Day5_POS_Backend_Web_exploded/api/v1/item',
+            method: 'PUT',
+            contentType: 'application/json',
+            data:JSON.stringify({
+                "iid":iid,
+                "iname": iname,
+                "iprice": iprice,
+                "iquantity": iquantity,
+            }),
+            success: function (resp) {
+                console.log(resp);
+                getAllCustomer();
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+    }
+
+    function deleteItem() {
+        const iid = $('#item-id').val();
+
+        // alert(cid+cname+caddress);
+
+        $.ajax({
+            url: 'http://localhost:8080/Day5_POS_Backend_Web_exploded/api/v1/item?iid='+iid,
+            method: 'DELETE',
+            contentType: 'application/json',
+            success: function (resp) {
+                console.log(resp);
+                getAllItems();
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+    }
+    function getAllItems() {
+        $.ajax({
+            url:'http://localhost:8080/Day5_POS_Backend_Web_exploded/api/v1/item',
+            method:'GET',
+            success:function (response) {
+                $('#customer-list').empty()
+                for(let item of response){
+                    const row ="<tr><td>"+item.iid+"</td><td>"+item.iname+"</td><td>"+item.iprice+"</td><td>"+item.iquantity+"</td></tr>"
+                    $('#item-list').append(row)
+                }
+
+            },
+            error:function (error) {
+                console.log(error)
+            }
+        })
+    }
+</script>
 </body>
 </html>
