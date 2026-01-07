@@ -36,6 +36,11 @@ public class ItemServlet extends HttpServlet {
         int quantity = jsonObject.get("iquantity").getAsInt();
 
         try {
+            if(itemExists(id)) {
+                resp.setStatus(HttpServletResponse.SC_CONFLICT);//409
+                resp.getWriter().println("Item with ID "+id+" already exists");
+                return;
+            }
             Connection connection=ds.getConnection();
             String query="INSERT INTO item (item_id,item_name,price,quantity) VALUES (?,?,?,?)";
             PreparedStatement preparedStatement=connection.prepareStatement(query);
@@ -52,6 +57,19 @@ public class ItemServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private boolean itemExists(String id) throws SQLException {
+        Connection connection = ds.getConnection();
+        String query = "SELECT COUNT(*) FROM item WHERE id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, id);  //check for the specific ID
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            return resultSet.getInt(1) > 0;  //returns true if count > 0
+        }
+        return false;
     }
 
     @Override

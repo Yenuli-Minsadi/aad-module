@@ -61,8 +61,8 @@
                 console.log(resp);
                 getAllItems();
             },
-            error: function (error) {
-                console.log(error);
+            error: function (xhr) {
+                alert(xhr.responseText)
             }
         })
     }

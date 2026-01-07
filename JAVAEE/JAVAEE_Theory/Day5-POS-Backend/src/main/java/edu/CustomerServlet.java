@@ -35,6 +35,11 @@ public class CustomerServlet extends HttpServlet {
         String address = jsonObject.get("caddress").getAsString();
 
         try {
+            if(customerExists(id)) {
+                resp.setStatus(HttpServletResponse.SC_CONFLICT);//409
+                resp.getWriter().println("Customer with ID "+id+" already exists");
+                return;
+            }
             Connection connection=ds.getConnection();
             String query="INSERT INTO customer (id,name,address) VALUES (?,?,?)";
             PreparedStatement preparedStatement=connection.prepareStatement(query);
@@ -51,8 +56,22 @@ public class CustomerServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-
     }
+
+    private boolean customerExists(String id) throws SQLException {
+        Connection connection = ds.getConnection();
+        String query = "SELECT COUNT(*) FROM customer WHERE id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, id);  //check for the specific ID
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            return resultSet.getInt(1) > 0;  //returns true if count > 0
+        }
+        return false;
+    }
+
+
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
