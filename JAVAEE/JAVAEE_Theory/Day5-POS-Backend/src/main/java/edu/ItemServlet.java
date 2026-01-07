@@ -61,7 +61,7 @@ public class ItemServlet extends HttpServlet {
 
     private boolean itemExists(String id) throws SQLException {
         Connection connection = ds.getConnection();
-        String query = "SELECT COUNT(*) FROM item WHERE id = ?";
+        String query = "SELECT COUNT(*) FROM item WHERE item_id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, id);  //check for the specific ID
         ResultSet resultSet = preparedStatement.executeQuery();
