@@ -6,12 +6,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class Boy {
     @Autowired// able to satisfy dependency injection
-    Girl girl;
+    Agreement agreement;
+//    Girl girl;
 
     public Boy(){
         System.out.println("Boy obj created");
     }
     public void chatWithGirl() {
-        girl.chat();
+        agreement.chat();
     }
 }
