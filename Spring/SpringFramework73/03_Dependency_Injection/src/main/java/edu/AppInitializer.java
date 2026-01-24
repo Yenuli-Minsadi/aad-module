@@ -1,5 +1,7 @@
 package edu;
 
+import edu.bean.Boy;
+import edu.bean.SpringBean;
 import edu.config.AppConfig;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -11,6 +13,8 @@ public class AppInitializer {
         context.register(AppConfig.class);
         context.refresh();
 
+        Boy boy = context.getBean(Boy.class);
+        boy.chatWithGirl();
 
         context.registerShutdownHook();//if this is gone the beans will stay without destroying
     }
