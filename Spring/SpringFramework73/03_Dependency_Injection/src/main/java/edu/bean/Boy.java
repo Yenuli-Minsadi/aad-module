@@ -1,11 +1,13 @@
 package edu.bean;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
 public class Boy {
     @Autowired// able to satisfy dependency injection
+    @Qualifier("girl1")
     Agreement agreement;
 //    Girl girl;
 
