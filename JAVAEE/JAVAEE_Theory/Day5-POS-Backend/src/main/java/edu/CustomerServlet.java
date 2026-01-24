@@ -20,14 +20,59 @@ import java.sql.SQLException;
 @WebServlet(urlPatterns = "/api/v1/customer")
 public class CustomerServlet extends HttpServlet {
     BasicDataSource ds;
+
     @Override
     public void init() throws ServletException {
         ServletContext servletContext = getServletContext();
         ds = (BasicDataSource) servletContext.getAttribute("datasource");
     }
 
+    // ADD THIS METHOD - CRITICAL FOR CORS
+    private void setCorsHeaders(HttpServletResponse resp) {
+        resp.setHeader("Access-Control-Allow-Origin", "*");
+        resp.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    }
+
+    // ADD THIS METHOD - HANDLES PREFLIGHT REQUESTS
+    @Override
+    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        setCorsHeaders(resp);
+        resp.setStatus(HttpServletResponse.SC_OK);
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        setCorsHeaders(resp); // ADD THIS LINE
+        resp.setContentType("application/json"); // ADD THIS LINE
+
+        try {
+            Connection connection= ds.getConnection();
+            String query="SELECT * FROM customer";
+            PreparedStatement preparedStatement=connection.prepareStatement(query);
+            ResultSet resultSet=preparedStatement.executeQuery();
+            JsonArray customerList=new JsonArray();
+            while (resultSet.next()) {
+                String cId=resultSet.getString("id");
+                String cName=resultSet.getString("name");
+                String cAddress=resultSet.getString("address");
+                JsonObject jsonObject=new JsonObject();
+                jsonObject.addProperty("cid",cId);
+                jsonObject.addProperty("cname",cName);
+                jsonObject.addProperty("caddress",cAddress);
+                customerList.add(jsonObject);
+            }
+            resp.getWriter().println(customerList);
+        } catch (SQLException e) {
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            resp.getWriter().println("{\"error\": \"" + e.getMessage() + "\"}");
+        }
+    }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        setCorsHeaders(resp); // ADD THIS LINE
+
         Gson gson = new Gson();
         JsonObject jsonObject = gson.fromJson(req.getReader(), JsonObject.class);
         String id = jsonObject.get("cid").getAsString();
@@ -36,7 +81,7 @@ public class CustomerServlet extends HttpServlet {
 
         try {
             if(customerExists(id)) {
-                resp.setStatus(HttpServletResponse.SC_CONFLICT);//409
+                resp.setStatus(HttpServletResponse.SC_CONFLICT);
                 resp.getWriter().println("Customer with ID "+id+" already exists");
                 return;
             }
@@ -55,26 +100,12 @@ public class CustomerServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
-
-    private boolean customerExists(String id) throws SQLException {
-        Connection connection = ds.getConnection();
-        String query = "SELECT COUNT(*) FROM customer WHERE id = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, id);  //check for the specific ID
-        ResultSet resultSet = preparedStatement.executeQuery();
-
-        if (resultSet.next()) {
-            return resultSet.getInt(1) > 0;  //returns true if count > 0
-        }
-        return false;
-    }
-
-
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        setCorsHeaders(resp); // ADD THIS LINE
+
         Gson gson = new Gson();
         JsonObject jsonObject = gson.fromJson(req.getReader(), JsonObject.class);
         String id = jsonObject.get("cid").getAsString();
@@ -100,31 +131,9 @@ public class CustomerServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {
-            Connection connection= ds.getConnection();
-            String query="SELECT * FROM customer";
-            PreparedStatement preparedStatement=connection.prepareStatement(query);
-            ResultSet resultSet=preparedStatement.executeQuery();
-            JsonArray customerList=new JsonArray();
-            while (resultSet.next()) {
-                String cId=resultSet.getString("id");
-                String cName=resultSet.getString("name");
-                String cAddress=resultSet.getString("address");
-                JsonObject jsonObject=new JsonObject();
-                jsonObject.addProperty("cid",cId);
-                jsonObject.addProperty("cname",cName);
-                jsonObject.addProperty("caddress",cAddress);
-                customerList.add(jsonObject);
-            }
-            resp.getWriter().println(customerList);
-            resp.setContentType("application/json");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        setCorsHeaders(resp); // ADD THIS LINE
+
         String id = req.getParameter("cid");
         try {
             Connection connection=ds.getConnection();
@@ -141,14 +150,17 @@ public class CustomerServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
-    //what is cors ?
-    //cors origin resource sharing is a mechanism that allows a server to tell browser
-    //"this origin is allowed to access my resources"
 
-    // WHY CORS? - To protect users
-    // WHAT? - Browser Security rule
-    // How? - Sever sends permission headers
-    // Where? - Happens only in browsers
-    // Fix? - Add CORS headers
+    private boolean customerExists(String id) throws SQLException {
+        Connection connection = ds.getConnection();
+        String query = "SELECT COUNT(*) FROM customer WHERE id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, id);
+        ResultSet resultSet = preparedStatement.executeQuery();
 
+        if (resultSet.next()) {
+            return resultSet.getInt(1) > 0;
+        }
+        return false;
+    }
 }

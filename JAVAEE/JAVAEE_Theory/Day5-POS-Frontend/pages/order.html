@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Order - POS System</title>
     <style>
         * {
             margin: 0;
@@ -19,6 +20,18 @@
         .nav-btn {
             background: #000428;
             color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin-right: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: #004e92;
         }
 
         .container {
@@ -39,26 +52,6 @@
         .header h1 {
             font-size: 28px;
             margin-bottom: 5px;
-        }
-
-        .nav-buttons {
-            margin-top: 15px;
-        }
-
-        .nav-buttons button {
-            background: rgba(255,255,255,0.2);
-            border: 1px solid rgba(255,255,255,0.3);
-            color: white;
-            padding: 8px 20px;
-            margin-right: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-
-        .nav-buttons button:hover {
-            background: rgba(255,255,255,0.3);
         }
 
         .content {
@@ -189,14 +182,6 @@
             transition: all 0.3s;
         }
 
-        .edit-btn {
-            color: #667eea;
-        }
-
-        .edit-btn:hover {
-            background: #e8eaf6;
-        }
-
         .delete-btn {
             color: #f44336;
         }
@@ -285,6 +270,24 @@
             font-size: 14px;
         }
 
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .success-message {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
         @media (max-width: 1024px) {
             .content {
                 grid-template-columns: 1fr;
@@ -297,9 +300,8 @@
     </style>
 </head>
 <body>
-<h1>Order</h1>
 <div>
-    <button class="nav-btn" onclick="window.location.href='../index.html'">Home</button>
+    <button class="nav-btn" onclick="window.location.href='index.html'">Home</button>
     <button class="nav-btn" onclick="window.location.href='customer.html'">Customer</button>
     <button class="nav-btn" onclick="window.location.href='item.html'">Item</button>
 </div>
@@ -311,25 +313,25 @@
 
     <div class="content">
         <div class="left-panel">
+            <div id="errorMessage" class="error-message"></div>
+            <div id="successMessage" class="success-message"></div>
+
             <div class="form-row">
                 <div class="form-group">
                     <label>Order ID</label>
-                    <input type="text" value="ORD-2025-001">
+                    <input type="text" id="orderId">
                 </div>
                 <div class="form-group">
                     <label>Date</label>
-                    <input type="text" value="2026-01-06">
+                    <input type="date" id="orderDate">
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
                     <label>Customer *</label>
-                    <select required>
+                    <select id="customerSelect" required>
                         <option value="">Select Customer</option>
-                        <option value="1">John Doe</option>
-                        <option value="2">Jane Smith</option>
-                        <option value="3">Mike Johnson</option>
                     </select>
                 </div>
             </div>
@@ -341,10 +343,6 @@
                         <label>Item</label>
                         <select id="itemSelect">
                             <option value="">Select Item</option>
-                            <option value="1" data-price="299.99">Laptop</option>
-                            <option value="2" data-price="149.99">Wireless Mouse</option>
-                            <option value="3" data-price="89.99">Keyboard</option>
-                            <option value="4" data-price="199.99">Monitor</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -359,11 +357,10 @@
                 <table id="orderItemsTable">
                     <thead>
                     <tr>
-                        <th>Order Id</th>
                         <th>Item</th>
-                        <th>Customer</th>
-                        <th>Date</th>
+                        <th>Unit Price</th>
                         <th>Quantity</th>
+                        <th>Total</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -400,7 +397,7 @@
                 </div>
 
                 <div class="action-buttons">
-                    <button class="btn btn-save-order" onclick="saveOrder()">Save Order</button>
+                    <button class="btn btn-save-order" onclick="saveOrder()">Place Order</button>
                 </div>
                 <div class="action-buttons">
                     <button class="btn btn-cancel-order" onclick="cancelOrder()">Cancel Order</button>
@@ -409,6 +406,289 @@
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+<script>
+    const API_BASE_URL = 'http://localhost:8080/Day5_POS_Backend_Web_exploded/api/v1';
+
+    let customers = [];
+    let items = [];
+    let orderItems = [];
+
+    // Initialize page
+    window.onload = function() {
+        generateOrderId();
+        setCurrentDate();
+        loadCustomers();
+        loadItems();
+    };
+
+    // Generate unique order ID
+    function generateOrderId() {
+        const timestamp = Date.now();
+        const orderId = 'ORD-' + timestamp;
+        document.getElementById('orderId').value = orderId;
+    }
+
+    // Set current date
+    function setCurrentDate() {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('orderDate').value = today;
+    }
+
+    // Load customers from API
+    async function loadCustomers() {
+        try {
+            const response = await fetch(`${API_BASE_URL}/customer`);
+            if (!response.ok) throw new Error('Failed to load customers');
+
+            customers = await response.json();
+            const customerSelect = document.getElementById('customerSelect');
+            customerSelect.innerHTML = '<option value="">Select Customer</option>';
+
+            customers.forEach(customer => {
+                const option = document.createElement('option');
+                option.value = customer.cid;
+                option.textContent = `${customer.cname} (${customer.cid})`;
+                customerSelect.appendChild(option);
+            });
+        } catch (error) {
+            showError('Failed to load customers: ' + error.message);
+        }
+    }
+
+    // Load items from API
+    async function loadItems() {
+        try {
+            const response = await fetch(`${API_BASE_URL}/item`);
+            if (!response.ok) throw new Error('Failed to load items');
+
+            items = await response.json();
+            const itemSelect = document.getElementById('itemSelect');
+            itemSelect.innerHTML = '<option value="">Select Item</option>';
+
+            items.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.iid;
+                option.setAttribute('data-price', item.iprice);
+                option.setAttribute('data-quantity', item.iquantity);
+                option.setAttribute('data-name', item.iname);
+                option.textContent = `${item.iname} - $${item.iprice.toFixed(2)} (Stock: ${item.iquantity})`;
+                itemSelect.appendChild(option);
+            });
+        } catch (error) {
+            showError('Failed to load items: ' + error.message);
+        }
+    }
+
+    // Add item to order
+    function addItem() {
+        const itemSelect = document.getElementById('itemSelect');
+        const quantityInput = document.getElementById('itemQuantity');
+
+        const selectedOption = itemSelect.options[itemSelect.selectedIndex];
+        const itemId = selectedOption.value;
+        const quantity = parseInt(quantityInput.value);
+
+        if (!itemId) {
+            showError('Please select an item');
+            return;
+        }
+
+        if (quantity < 1) {
+            showError('Quantity must be at least 1');
+            return;
+        }
+
+        const itemName = selectedOption.getAttribute('data-name');
+        const unitPrice = parseFloat(selectedOption.getAttribute('data-price'));
+        const availableQuantity = parseInt(selectedOption.getAttribute('data-quantity'));
+
+        if (quantity > availableQuantity) {
+            showError(`Insufficient stock! Available: ${availableQuantity}`);
+            return;
+        }
+
+        // Check if item already exists in order
+        const existingItem = orderItems.find(item => item.itemId === itemId);
+        if (existingItem) {
+            existingItem.quantity += quantity;
+        } else {
+            orderItems.push({
+                itemId: itemId,
+                itemName: itemName,
+                unitPrice: unitPrice,
+                quantity: quantity
+            });
+        }
+
+        updateOrderTable();
+        calculateTotals();
+
+        // Reset selections
+        itemSelect.selectedIndex = 0;
+        quantityInput.value = 1;
+    }
+
+    // Update order items table
+    function updateOrderTable() {
+        const tbody = document.getElementById('orderItemsBody');
+
+        if (orderItems.length === 0) {
+            tbody.innerHTML = `
+                <tr class="empty-state">
+                    <td colspan="5">
+                        <p>No items added yet</p>
+                        <p>Select items above to add to this order</p>
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        tbody.innerHTML = '';
+        orderItems.forEach((item, index) => {
+            const total = item.unitPrice * item.quantity;
+            const row = tbody.insertRow();
+            row.innerHTML = `
+                <td>${item.itemName}</td>
+                <td>$${item.unitPrice.toFixed(2)}</td>
+                <td>${item.quantity}</td>
+                <td>$${total.toFixed(2)}</td>
+                <td>
+                    <button class="action-btn delete-btn" onclick="removeItem(${index})">🗑️ Remove</button>
+                </td>
+            `;
+        });
+    }
+
+    // Remove item from order
+    function removeItem(index) {
+        orderItems.splice(index, 1);
+        updateOrderTable();
+        calculateTotals();
+    }
+
+    // Calculate order totals
+    function calculateTotals() {
+        const subtotal = orderItems.reduce((sum, item) => sum + (item.unitPrice * item.quantity), 0);
+        const tax = subtotal * 0.10;
+        const discount = 0; // You can implement discount logic here
+        const total = subtotal + tax - discount;
+
+        document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+        document.getElementById('tax').textContent = '$' + tax.toFixed(2);
+        document.getElementById('discount').textContent = '$' + discount.toFixed(2);
+        document.getElementById('total').textContent = '$' + total.toFixed(2);
+    }
+
+    // Save order
+    async function saveOrder() {
+        const orderId = document.getElementById('orderId').value;
+        const customerId = document.getElementById('customerSelect').value;
+        const orderDate = document.getElementById('orderDate').value;
+
+        // Validation
+        if (!customerId) {
+            showError('Please select a customer');
+            return;
+        }
+
+        if (orderItems.length === 0) {
+            showError('Please add at least one item to the order');
+            return;
+        }
+
+        // Calculate totals
+        const subtotal = orderItems.reduce((sum, item) => sum + (item.unitPrice * item.quantity), 0);
+        const tax = subtotal * 0.10;
+        const discount = 0;
+        const total = subtotal + tax - discount;
+
+        // Prepare order data
+        const orderData = {
+            orderId: orderId,
+            customerId: customerId,
+            orderDate: orderDate,
+            subtotal: subtotal,
+            tax: tax,
+            discount: discount,
+            total: total,
+            items: orderItems
+        };
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/order`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(orderData)
+            });
+
+            const responseText = await response.text();
+
+            if (response.ok) {
+                showSuccess('Order placed successfully!');
+                setTimeout(() => {
+                    resetOrder();
+                }, 2000);
+            } else {
+                showError('Failed to place order: ' + responseText);
+            }
+        } catch (error) {
+            showError('Error placing order: ' + error.message);
+        }
+    }
+
+    // Cancel order
+    function cancelOrder() {
+        if (orderItems.length > 0) {
+            if (confirm('Are you sure you want to cancel this order?')) {
+                resetOrder();
+            }
+        } else {
+            resetOrder();
+        }
+    }
+
+    // Reset order form
+    function resetOrder() {
+        orderItems = [];
+        generateOrderId();
+        setCurrentDate();
+        document.getElementById('customerSelect').selectedIndex = 0;
+        updateOrderTable();
+        calculateTotals();
+        hideMessages();
+    }
+
+    // Show error message
+    function showError(message) {
+        const errorDiv = document.getElementById('errorMessage');
+        errorDiv.textContent = message;
+        errorDiv.style.display = 'block';
+        setTimeout(() => {
+            errorDiv.style.display = 'none';
+        }, 5000);
+    }
+
+    // Show success message
+    function showSuccess(message) {
+        const successDiv = document.getElementById('successMessage');
+        successDiv.textContent = message;
+        successDiv.style.display = 'block';
+        setTimeout(() => {
+            successDiv.style.display = 'none';
+        }, 3000);
+    }
+
+    // Hide all messages
+    function hideMessages() {
+        document.getElementById('errorMessage').style.display = 'none';
+        document.getElementById('successMessage').style.display = 'none';
+    }
+</script>
 
 </body>
 </html>

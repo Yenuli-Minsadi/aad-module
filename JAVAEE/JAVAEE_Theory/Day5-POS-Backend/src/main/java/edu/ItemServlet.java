@@ -28,6 +28,9 @@ public class ItemServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        setCorsHeaders(resp); // ADD THIS LINE
+        resp.setContentType("application/json"); // ADD THIS LINE
+
         Gson gson = new Gson();
         JsonObject jsonObject = gson.fromJson(req.getReader(), JsonObject.class);
         String id = jsonObject.get("iid").getAsString();
@@ -74,6 +77,9 @@ public class ItemServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        setCorsHeaders(resp); // ADD THIS LINE
+        resp.setContentType("application/json"); // ADD THIS LINE
+
         Gson gson = new Gson();
         JsonObject jsonObject = gson.fromJson(req.getReader(), JsonObject.class);
         String id = jsonObject.get("iid").getAsString();
@@ -102,6 +108,9 @@ public class ItemServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        setCorsHeaders(resp); // ADD THIS
+        resp.setContentType("application/json"); // ADD THIS
+
         try {
             Connection connection= ds.getConnection();
             String query="SELECT * FROM item";
@@ -130,6 +139,9 @@ public class ItemServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        setCorsHeaders(resp); // ADD THIS LINE
+        resp.setContentType("application/json"); // ADD THIS LINE
+
         String id = req.getParameter("iid");
         try {
             Connection connection=ds.getConnection();
@@ -146,4 +158,18 @@ public class ItemServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
+
+    // ADD THESE TWO METHODS
+    private void setCorsHeaders(HttpServletResponse resp) {
+        resp.setHeader("Access-Control-Allow-Origin", "*");
+        resp.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    }
+
+    @Override
+    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        setCorsHeaders(resp);
+        resp.setStatus(HttpServletResponse.SC_OK);
+    }
+
 }
