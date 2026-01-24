@@ -5,15 +5,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SpringBean implements InitializingBean {
+public class SpringBean {
     @Value("Yen")
     private String name;
-    public SpringBean() {
+    public SpringBean(@Value("Yen")String name) {
         System.out.println(name);//obj ek create weddi value set wenne na acc to lifecycle
     }
+    
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        System.out.println(name);
-    }
+//    @Override
+//    public void afterPropertiesSet() throws Exception {
+//        System.out.println(name);
+//    }
 }
