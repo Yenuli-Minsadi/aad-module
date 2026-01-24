@@ -14,21 +14,22 @@ public class AppConfig {
     public AppConfig() {
         System.out.println("AppConfig created");
     }
-
-    @Bean// bean method
-    public SpringBean1 springBean1()
-    {
-        SpringBean2 springBean2_1 = springBean2();//SB2 hdl eyge ref ek argttata passe SB1 ek hdnw
-        SpringBean2 springBean2_2 = springBean2();
-        System.out.println("springBean2_1: " + springBean2_1);
-        System.out.println("springBean2_2: " + springBean2_2);
-
-        return new SpringBean1();
-    }
-
-    @Bean
-    public SpringBean2 springBean2() {
-        return new SpringBean2();
-    }
+//full mode
+//    @Bean// bean method
+//    public SpringBean1 springBean1()
+    //inter- bean dependency satisfied - only injects a bean obj
+//    {
+//        SpringBean2 springBean2_1 = springBean2();//SB2 hdl eyge ref ek argttata passe SB1 ek hdnw
+//        SpringBean2 springBean2_2 = springBean2();
+//        System.out.println("springBean2_1: " + springBean2_1);
+//        System.out.println("springBean2_2: " + springBean2_2);
+//
+//        return new SpringBean1();
+//    }
+//
+//    @Bean
+//    public SpringBean2 springBean2() {
+//        return new SpringBean2();
+//    }
 
 }
