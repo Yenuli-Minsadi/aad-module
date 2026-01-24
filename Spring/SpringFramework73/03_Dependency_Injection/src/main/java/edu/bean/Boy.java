@@ -1,13 +1,15 @@
 package edu.bean;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class Boy {
+    @Autowired// able to satisfy dependency injection
     Girl girl;
 
     public Boy(){
-        girl=new Girl();
+        System.out.println("Boy obj created");
     }
     public void chatWithGirl() {
         girl.chat();
