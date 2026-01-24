@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Boy {
-    @Autowired// able to satisfy dependency injection
+    @Autowired// able to satisfy dependency injection, not ideal to field inject rather constructor thru inject
     @Qualifier("girl1")
     Agreement agreement;
 //    Girl girl;

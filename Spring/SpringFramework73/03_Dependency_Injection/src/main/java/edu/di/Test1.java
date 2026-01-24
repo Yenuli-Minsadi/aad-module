@@ -1,9 +1,11 @@
 package edu.di;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
+@Scope("Prototype")
 public class Test1 implements DiInterface{
 
     //property injection, field injection
