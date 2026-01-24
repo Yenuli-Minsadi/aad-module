@@ -9,6 +9,7 @@
         <module name="02_Spring_Bean_Lifecycle" />
         <module name="04_Full_Mode_Vs_Light_Mode" />
         <module name="01_Spring_Core" />
+        <module name="05_Configurations" />
         <module name="03_Dependency_Injection" />
       </profile>
     </annotationProcessing>
