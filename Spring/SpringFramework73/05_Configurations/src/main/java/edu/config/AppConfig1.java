@@ -1,6 +1,7 @@
 package edu.config;
 
 import edu.bean.ABean;
+import edu.bean.BBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -14,5 +15,10 @@ public class AppConfig1 {
     @Bean
     public ABean aBean() {
         return new ABean();
+    }
+
+    @Bean
+    public BBean bBean() {
+        return new BBean();
     }
 }
