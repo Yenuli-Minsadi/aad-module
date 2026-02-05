@@ -37,4 +37,11 @@ private final CustomerServiceImpl customerService;//why
         System.out.println("updateCustomer");
 
     }
+
+    @DeleteMapping
+    public void deleteCustomer(@RequestBody CustomerDTO customerDTO) {
+        customerService.deleteCustomer(customerDTO.getCid());
+        System.out.println("deleteCustomer");
+
+    }
 }

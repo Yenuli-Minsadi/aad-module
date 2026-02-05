@@ -47,3 +47,24 @@ function updateCustomer() {
         }
     })
 }
+
+function deleteCustomer() {
+    let cId=$('#Cid').val();
+
+    console.log(cId)
+
+    $.ajax({
+        url:"http://localhost:8080/api/v1/customer",
+        method:"DELETE",
+        contentType:"application/json",
+        "data": JSON.stringify({
+            "cid": cId
+        }),
+        success:function (res) {
+            alert("done")
+        },
+        error:function (error) {
+            alert("network error")
+        }
+    })
+}
