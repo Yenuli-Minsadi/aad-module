@@ -12,3 +12,4 @@ public class AppConfig {
         System.out.println("AppConfig constructor");
     }
 }
+

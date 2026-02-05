@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Management</title>
+
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 60%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        button {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Customer Management</h1>
+
+<div>
+    <a href="../index.html">Home</a>
+    <a href="item.html">Item</a>
+    <a href="place-order.html">Order</a>
+</div>
+
+<br><br>
+
+<input id="Cid" type="text" placeholder="CID">
+<input id="Ncame" type="text" placeholder="Name">
+<input id="Caddress" type="text" placeholder="Address">
+
+<br><br>
+
+<button onclick="saveCustomer()">Save</button>
+<button onclick="updateCustomer()">Update</button>
+<button onclick="deleteCustomer()">Delete</button>
+<button onclick="loadCustomers()">Get All</button>
+
+<table>
+    <thead>
+    <tr>
+        <th>CID</th>
+        <th>Name</th>
+        <th>Address</th>
+    </tr>
+    </thead>
+    <tbody id="customerTableBody">
+    <!-- rows go here -->
+    </tbody>
+</table>
+
+
+<script>
+    let customers = [];
+    let selectedIndex = -1;
+
+    function saveCustomer() {
+        const cid = document.getElementById("Cid").value;
+        const name = document.getElementById("Ncame").value;
+        const address = document.getElementById("Caddress").value;
+
+        customers.push({ cid, name, address });
+        clearInputs();
+        loadCustomers();
+    }
+
+    function loadCustomers() {
+        const tableBody = document.getElementById("customerTableBody");
+        tableBody.innerHTML = "";
+
+        customers.forEach((customer, index) => {
+            const row = `
+                <tr onclick="selectCustomer(${index})">
+                    <td>${customer.cid}</td>
+                    <td>${customer.name}</td>
+                    <td>${customer.address}</td>
+                </tr>
+            `;
+            tableBody.innerHTML += row;
+        });
+    }
+
+    function selectCustomer(index) {
+        selectedIndex = index;
+        const customer = customers[index];
+
+        document.getElementById("Cid").value = customer.cid;
+        document.getElementById("Ncame").value = customer.name;
+        document.getElementById("Caddress").value = customer.address;
+    }
+
+    function updateCustomer() {
+        if (selectedIndex === -1) return;
+
+        customers[selectedIndex] = {
+            cid: document.getElementById("Cid").value,
+            name: document.getElementById("Ncame").value,
+            address: document.getElementById("Caddress").value
+        };
+
+        clearInputs();
+        loadCustomers();
+    }
+
+    function deleteCustomer() {
+        if (selectedIndex === -1) return;
+
+        customers.splice(selectedIndex, 1);
+        selectedIndex = -1;
+        clearInputs();
+        loadCustomers();
+    }
+
+    function clearInputs() {
+        document.getElementById("Cid").value = "";
+        document.getElementById("Ncame").value = "";
+        document.getElementById("Caddress").value = "";
+    }
+</script>
+
+</body>
+</html>

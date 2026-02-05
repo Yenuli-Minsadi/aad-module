@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 60%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        button {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+<h1>Item Management</h1>
+<div>
+    <a href="../index.html">Home</a>
+    <a href="customer.html">Customer</a>
+    <a href="place-order.html">Order</a>
+</div>
+
+<br><br>
+
+<input id="itemId" type="text" placeholder="Item ID">
+<input id="itemName" type="text" placeholder="Item Name">
+<input id="itemQuantity" type="text" placeholder="Item Quantity">
+
+<br><br>
+
+<button onclick="saveItem()">Save</button>
+<button onclick="updateItem()">Update</button>
+<button onclick="deleteItem()">Delete</button>
+<button onclick="loadItem()">Get All</button>
+
+<table>
+    <thead>
+    <tr>
+        <th>Item ID</th>
+        <th>Item Name</th>
+        <th>Quantity</th>
+    </tr>
+    </thead>
+    <tbody id="itemTableBody">
+    <!-- rows go here -->
+    </tbody>
+</table>
+</body>
+</html>

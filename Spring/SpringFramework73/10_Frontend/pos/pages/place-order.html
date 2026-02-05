@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 60%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        button {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+<h1>Order Management</h1>
+
+
+<div>
+    <a href="../index.html">Home</a>
+    <a href="customer.html">Customer</a>
+    <a href="item.html">Item</a>
+</div>
+
+<br><br>
+
+<!-- Item Dropdown -->
+<select id="itemId">
+    <option value="">Select Item</option>
+    <option value="I001">I001 - Laptop</option>
+    <option value="I002">I002 - Mouse</option>
+    <option value="I003">I003 - Keyboard</option>
+</select>
+
+<!-- Customer Dropdown -->
+<select id="customerId">
+    <option value="">Select Customer</option>
+    <option value="C001">C001 - John</option>
+    <option value="C002">C002 - Alice</option>
+    <option value="C003">C003 - David</option>
+</select>
+
+<!-- Quantity Dropdown -->
+<select id="itemQuantity">
+    <option value="">Select Quantity</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+</select>
+
+<br><br>
+
+<button onclick="saveOrder()">Save</button>
+<button onclick="updateOrder()">Update</button>
+<button onclick="deleteOrder()">Delete</button>
+<button onclick="loadOrders()">Get All</button>
+
+<br><br>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Order ID</th>
+        <th>Customer ID</th>
+        <th>Quantity</th>
+    </tr>
+    </thead>
+    <tbody id="orderTableBody">
+    <!-- rows go here -->
+    </tbody>
+</table>
+
+</body>
+</html>
