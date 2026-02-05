@@ -29,16 +29,16 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void updateCustomer(CustomerDTO customerDTO) {
-        customerDTO.getCid(), customerDTO.getNcame(), customerDTO.getCaddress();
+        customerRepository.save(new Customer(customerDTO.getCid(), customerDTO.getNcame(), customerDTO.getCaddress()));
     }
 
     @Override
     public void deleteCustomer(String customerId) {
-
+        customerRepository.deleteById(customerId);
     }
 
     @Override
     public void getAllCustomer(CustomerDTO customerDTO) {
-
+        customerRepository.findAll();
     }
 }

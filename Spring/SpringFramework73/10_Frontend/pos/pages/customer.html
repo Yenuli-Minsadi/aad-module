@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Customer Management</title>
+    <script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
 
     <style>
         table {
@@ -39,9 +40,9 @@
 <br><br>
 
 <button onclick="saveCustomer()">Save</button>
-<button onclick="updateCustomer()">Update</button>
-<button onclick="deleteCustomer()">Delete</button>
-<button onclick="loadCustomers()">Get All</button>
+<button>Update</button>
+<button>Delete</button>
+<button>Get All</button>
 
 <table>
     <thead>
@@ -57,73 +58,74 @@
 </table>
 
 
-<script>
-    let customers = [];
-    let selectedIndex = -1;
+<!--<script>-->
+<!--    let customers = [];-->
+<!--    let selectedIndex = -1;-->
 
-    function saveCustomer() {
-        const cid = document.getElementById("Cid").value;
-        const name = document.getElementById("Ncame").value;
-        const address = document.getElementById("Caddress").value;
+<!--    function saveCustomer() {-->
+<!--        const cid = document.getElementById("Cid").value;-->
+<!--        const name = document.getElementById("Ncame").value;-->
+<!--        const address = document.getElementById("Caddress").value;-->
 
-        customers.push({ cid, name, address });
-        clearInputs();
-        loadCustomers();
-    }
+<!--        customers.push({ cid, name, address });-->
+<!--        clearInputs();-->
+<!--        loadCustomers();-->
+<!--    }-->
 
-    function loadCustomers() {
-        const tableBody = document.getElementById("customerTableBody");
-        tableBody.innerHTML = "";
+<!--    function loadCustomers() {-->
+<!--        const tableBody = document.getElementById("customerTableBody");-->
+<!--        tableBody.innerHTML = "";-->
 
-        customers.forEach((customer, index) => {
-            const row = `
-                <tr onclick="selectCustomer(${index})">
-                    <td>${customer.cid}</td>
-                    <td>${customer.name}</td>
-                    <td>${customer.address}</td>
-                </tr>
-            `;
-            tableBody.innerHTML += row;
-        });
-    }
+<!--        customers.forEach((customer, index) => {-->
+<!--            const row = `-->
+<!--                <tr onclick="selectCustomer(${index})">-->
+<!--                    <td>${customer.cid}</td>-->
+<!--                    <td>${customer.name}</td>-->
+<!--                    <td>${customer.address}</td>-->
+<!--                </tr>-->
+<!--            `;-->
+<!--            tableBody.innerHTML += row;-->
+<!--        });-->
+<!--    }-->
 
-    function selectCustomer(index) {
-        selectedIndex = index;
-        const customer = customers[index];
+<!--    function selectCustomer(index) {-->
+<!--        selectedIndex = index;-->
+<!--        const customer = customers[index];-->
 
-        document.getElementById("Cid").value = customer.cid;
-        document.getElementById("Ncame").value = customer.name;
-        document.getElementById("Caddress").value = customer.address;
-    }
+<!--        document.getElementById("Cid").value = customer.cid;-->
+<!--        document.getElementById("Ncame").value = customer.name;-->
+<!--        document.getElementById("Caddress").value = customer.address;-->
+<!--    }-->
 
-    function updateCustomer() {
-        if (selectedIndex === -1) return;
+<!--    function updateCustomer() {-->
+<!--        if (selectedIndex === -1) return;-->
 
-        customers[selectedIndex] = {
-            cid: document.getElementById("Cid").value,
-            name: document.getElementById("Ncame").value,
-            address: document.getElementById("Caddress").value
-        };
+<!--        customers[selectedIndex] = {-->
+<!--            cid: document.getElementById("Cid").value,-->
+<!--            name: document.getElementById("Ncame").value,-->
+<!--            address: document.getElementById("Caddress").value-->
+<!--        };-->
 
-        clearInputs();
-        loadCustomers();
-    }
+<!--        clearInputs();-->
+<!--        loadCustomers();-->
+<!--    }-->
 
-    function deleteCustomer() {
-        if (selectedIndex === -1) return;
+<!--    function deleteCustomer() {-->
+<!--        if (selectedIndex === -1) return;-->
 
-        customers.splice(selectedIndex, 1);
-        selectedIndex = -1;
-        clearInputs();
-        loadCustomers();
-    }
+<!--        customers.splice(selectedIndex, 1);-->
+<!--        selectedIndex = -1;-->
+<!--        clearInputs();-->
+<!--        loadCustomers();-->
+<!--    }-->
 
-    function clearInputs() {
-        document.getElementById("Cid").value = "";
-        document.getElementById("Ncame").value = "";
-        document.getElementById("Caddress").value = "";
-    }
-</script>
+<!--    function clearInputs() {-->
+<!--        document.getElementById("Cid").value = "";-->
+<!--        document.getElementById("Ncame").value = "";-->
+<!--        document.getElementById("Caddress").value = "";-->
+<!--    }-->
+<!--</script>-->
+<script src="../js/app.js"></script>
 
 </body>
 </html>
