@@ -30,4 +30,11 @@ private final CustomerServiceImpl customerService;//why
 //        System.out.println(customerDTO.getNcame());
 //        System.out.println(customerDTO.getCaddress());
     }
+
+    @PutMapping
+    public void updateCustomer(@RequestBody CustomerDTO customerDTO) {
+        customerService.updateCustomer(customerDTO);
+        System.out.println("updateCustomer");
+
+    }
 }
