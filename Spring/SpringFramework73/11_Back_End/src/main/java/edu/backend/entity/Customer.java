@@ -17,4 +17,5 @@ public class Customer {
     private String cId;
     private String cName;
     private String cAddress;
+
 }

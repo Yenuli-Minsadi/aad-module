@@ -68,3 +68,19 @@ function deleteCustomer() {
         }
     })
 }
+
+function getAllCustomer() {
+    $.ajax({
+        url: "http://localhost:8080/api/v1/customer",
+        method: "GET",
+        success: function (res) {
+            console.log(res);
+            alert("Fetched successfully");
+        },
+        error: function () {
+            alert("network error");
+        }
+    });
+}
+
+

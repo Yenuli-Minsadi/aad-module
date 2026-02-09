@@ -5,6 +5,8 @@ import edu.backend.service.custom.impl.CustomerServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("api/v1/customer")
@@ -42,6 +44,10 @@ private final CustomerServiceImpl customerService;//why
     public void deleteCustomer(@RequestBody CustomerDTO customerDTO) {
         customerService.deleteCustomer(customerDTO.getCid());
         System.out.println("deleteCustomer");
-
     }
+
+//    @GetMapping
+//    public List<CustomerDTO> getAllCustomer() {
+//        return customerService.getAllCustomer();
+//    }
 }

@@ -17,11 +17,11 @@ public class CustomerDTO {
     }
 
 
-    public String getCaddress() {
+    public String getAddress() {
         return address;
     }
 
-    public void setCaddress(String address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 
@@ -41,11 +41,11 @@ public class CustomerDTO {
 //        this.cphone = cphone;
 //    }
 
-    public String getNcame() {
+    public String getName() {
         return name;
     }
 
-    public void setNcame(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 

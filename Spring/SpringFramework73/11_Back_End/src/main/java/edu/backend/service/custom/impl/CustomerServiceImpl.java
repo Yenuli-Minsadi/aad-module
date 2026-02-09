@@ -7,6 +7,8 @@ import edu.backend.service.custom.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
@@ -17,8 +19,8 @@ public class CustomerServiceImpl implements CustomerService {
     public void saveCustomer(CustomerDTO customerDTO) {
         customerRepository.save(new Customer(
                 customerDTO.getCid(),
-                customerDTO.getNcame(),
-                customerDTO.getCaddress()
+                customerDTO.getName(),
+                customerDTO.getAddress()
         ));
 //        System.out.println("CustomerService.saveCustomer");
 //        System.out.println(customerDTO.getCid());
@@ -29,7 +31,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void updateCustomer(CustomerDTO customerDTO) {
-        customerRepository.save(new Customer(customerDTO.getCid(), customerDTO.getNcame(), customerDTO.getCaddress()));
+        customerRepository.save(new Customer(customerDTO.getCid(), customerDTO.getName(), customerDTO.getAddress()));
     }
 
     @Override
@@ -41,4 +43,7 @@ public class CustomerServiceImpl implements CustomerService {
     public void getAllCustomer(CustomerDTO customerDTO) {
         customerRepository.findAll();
     }
+
+
+
 }
