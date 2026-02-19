@@ -18,10 +18,20 @@
         <module name="05_Configurations" />
         <module name="06_Runtime_Value_Injection" />
       </profile>
+      <profile name="Annotation profile for 13_Security_BE" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
+        </processorPath>
+        <module name="Security_BE" />
+      </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Security_BE" options="-parameters" />
       <module name="backend" options="-parameters" />
     </option>
   </component>
